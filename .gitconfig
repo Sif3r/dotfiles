@@ -1,0 +1,23 @@
+# This is Git's per-user configuration file.
+[user]
+# Please adapt and uncomment the following lines:
+	name = Aurélien Aoustin
+	email = 62019680+Sif3r@users.noreply.github.com
+[core]
+	editor = nvim
+[color]
+	ui = true
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+	br = branch
+	di = diff
+	lg = log --graph --all --decorate
+	po = push origin
+[mergetool "fugitive"]
+	cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
+[merge]
+	tool = fugitive
+[init]
+	defaultBranch = master
