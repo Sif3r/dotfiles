@@ -32,7 +32,7 @@ function IkonuHeader()
         php = {s = '#!/usr/bin/env php\n/*', c = '** ', e = '*/\n<?php'},
         sh = {s = '#!/usr/bin/env bash', c = '## ', e = '##'},
         perl = {s = '#!/usr/bin/env perl', c = '## ', e = '##'},
-        python = {s = '#!/usr/bin/env python3', c = '## ', e = '##'},
+        python = {s = '#!/usr/bin/env python3', c = '# ', e = '#'},
         ruby = {s = '#!/usr/bin/env ruby', c = '## ', e = '##'},
         node = {s = '#!/usr/bin/env node\n/*', c = '** ', e = '*/'},
     }
@@ -43,7 +43,6 @@ function IkonuHeader()
             comment_style.c..'File: '..filename,
             comment_style.c..'Author: '..author,
             comment_style.c..'Created: '..created_date,
-            comment_style.c..'Modified: '..modified_date,
             comment_style.c..'Description: This is a brief description of what this file is for and what',
             comment_style.c..'it does. For example, it could be a class definition, a set of functions,',
             comment_style.c..'etc. This should be a couple of sentences long at most.',
