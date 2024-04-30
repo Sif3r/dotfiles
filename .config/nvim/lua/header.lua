@@ -5,7 +5,7 @@ local bo = vim.bo
 function IkonuHeader()
     local filetype = bo.filetype
     local filename = fn.expand('%:t')
-    local author = "Aurélien Aoustin (aoustin.aurelien@ikonu.fr)"
+    local author = "Aurélien Aoustin (aousti_a@etna-alternance.net)"
     local created_date = os.date("%d/%m/%Y")
     local modified_date = "dd/mm/yyyy"
     local comType = {

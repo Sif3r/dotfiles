@@ -41,11 +41,6 @@ o.lazyredraw = true -- attempts to kill vim lag
 o.ttimeoutlen = 0 -- no timeout when switching modes
 o.scrolloff = 5
 
--- Colorscheme
-cmd('syntax on')
--- cmd[[colorscheme nightfox]]
-o.background = "dark" -- or "light" for light mode
-cmd([[colorscheme gruvbox]])
 -- lightline config
 g.lightline = {
   colorscheme = 'seoul256',
@@ -59,3 +54,8 @@ g.lightline = {
     gitbranch = 'FugitiveHead',
   },
 }
+
+-- Colorscheme
+cmd('syntax on')
+o.background = "dark"
+cmd.colorscheme "catppuccin"

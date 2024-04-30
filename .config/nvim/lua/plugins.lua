@@ -1,31 +1,41 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
-
--- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
-
-return require('packer').startup(function(use)
-    -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
-    use 'itchyny/lightline.vim'
-    use 'ludovicchabant/vim-gutentags'
-    use 'tpope/vim-fugitive'
-    use 'tpope/vim-commentary'
-    use 'romainl/vim-qf'
-    use 'romainl/vim-qlist'
-    use 'tommcdo/vim-lion'
-    use 'tpope/vim-eunuch'
-    use 'tpope/vim-surround'
-    use 'MaxMEllon/vim-jsx-pretty'
-    use { "ellisonleao/gruvbox.nvim" }
-    use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.4',
-        requires = { {'nvim-lua/plenary.nvim'}, { 'nvim-treesitter/nvim-treesitter' }}
-
-    }
-    use {
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
+end
+vim.opt.rtp:prepend(lazypath)
+-- 'ludovicchabant/vim-gutentags',
+local plugins = {
+    'itchyny/lightline.vim',
+    'tpope/vim-fugitive',
+    'tpope/vim-commentary',
+    'romainl/vim-qf',
+    'romainl/vim-qlist',
+    'tommcdo/vim-lion',
+    'tpope/vim-eunuch',
+    'tpope/vim-surround',
+    'MaxMEllon/vim-jsx-pretty',
+    'ellisonleao/gruvbox.nvim',
+    'mfussenegger/nvim-jdtls',
+    {'catppuccin/nvim', name = 'catppuccin', priority = 1000},
+    {
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.6',
+        dependencies = {
+            {'nvim-lua/plenary.nvim'},
+            {'nvim-treesitter/nvim-treesitter'}
+        }
+    },
+    {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v1.x',
-        requires = {
+        dependencies = {
             -- LSP Support
             {'neovim/nvim-lspconfig'},             -- Required
             {'williamboman/mason.nvim'},           -- Optional
@@ -44,4 +54,8 @@ return require('packer').startup(function(use)
             {'rafamadriz/friendly-snippets'}, -- Optional
         }
     }
-end)
+}
+
+local opts = {}
+
+require("lazy").setup(plugins, opts)

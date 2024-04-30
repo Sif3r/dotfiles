@@ -1,6 +1,6 @@
 require('plugins')
 require('basics')
-require('backup')
+-- require('backup')
 require('keybindings')
 require('search')
 require('characters')

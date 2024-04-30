@@ -110,18 +110,4 @@ SPACESHIP_PROMPT_ASYNC=false
 #alias
 alias t="tree"
 alias nv="nvim"
-# alias ls="exa"
-
-# Path flutter
-export PATH="$PATH:`pwd`/flutter/bin"
-export PATH="$PATH":"$HOME/.pub-cache/bin"
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/cypher/workspace/ikonu/mcdo_terminal/google-cloud-sdk/path.zsh.inc' ]; then . '/home/cypher/workspace/ikonu/mcdo_terminal/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/cypher/workspace/ikonu/mcdo_terminal/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/cypher/workspace/ikonu/mcdo_terminal/google-cloud-sdk/completion.zsh.inc'; fi
-alias config='/usr/bin/git --git-dir=/home/cypher/.dotfiles/ --work-tree=/home/cypher'
+alias ls="exa"
