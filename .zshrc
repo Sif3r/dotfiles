@@ -13,6 +13,9 @@ if [ "$TMUX" = "" ]; then tmux; fi
 ZSH_THEME="spaceship"
 
 SPACESHIP_EXIT_CODE_SHOW=true
+SPACESHIP_PROMPT_ASYNC=true
+SPACESHIP_ASYNC_SHOW=false
+
 HISTSIZE=1000
 SAVEHIST=1000
 # Set list of themes to pick from when loading at random
@@ -105,7 +108,6 @@ source $ZSH/oh-my-zsh.sh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-SPACESHIP_PROMPT_ASYNC=false
 
 #alias
 alias t="tree"
