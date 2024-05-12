@@ -16,7 +16,7 @@ discharging_symbol = "⚡"
 
 [cmd_duration]
 min_time = 2_000  # Show command duration over 2,000 milliseconds (=2 sec)
-format = " [$duration]($style)"
+format = "[$duration]($style)"
 
 [status]
 disabled = false
