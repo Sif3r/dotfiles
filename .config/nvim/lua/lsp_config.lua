@@ -1,8 +1,7 @@
 require("mason").setup()
-require("mason-lspconfig").setup()
---require("lspconfig").lua-language-server.setup {}
---    ensure_installed = { "clangd", "css-lsp", "gopls", "html-lsp", "lua-language-server", "typescript-language-server"  },
---}
+require("mason-lspconfig").setup {
+    ensure_installed = { "clangd", "gopls", "lua_ls" },
+}
 
 require'cmp'.setup {
     sources = {
@@ -23,21 +22,6 @@ require'lspconfig'.gopls.setup {
 }
 
 require'lspconfig'.lua_ls.setup {
-    capabilities = capabilities,
-}
-require'lspconfig'.cssls.setup {
-    capabilities = capabilities,
-}
-
-require'lspconfig'.unocss.setup {
-    capabilities = capabilities,
-}
-
-require'lspconfig'.html.setup {
-    capabilities = capabilities,
-}
-
-require'lspconfig'.phpactor.setup {
     capabilities = capabilities,
 }
 
