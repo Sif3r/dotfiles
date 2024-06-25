@@ -2,12 +2,11 @@ local api = vim.api
 local fn = vim.fn
 local bo = vim.bo
 
-function IkonuHeader()
+function Header()
     local filetype = bo.filetype
     local filename = fn.expand('%:t')
     local author = "Aurélien Aoustin (aousti_a@etna-alternance.net)"
     local created_date = os.date("%d/%m/%Y")
-    local modified_date = "dd/mm/yyyy"
     local comType = {
         asm = {s = ';', c = '; ', e = ';'},
         c = {s = '/*', c = '** ', e = '*/'},
@@ -51,4 +50,4 @@ function IkonuHeader()
         api.nvim_buf_set_lines(0, 0, 0, false, header)
     end
 end
-vim.cmd('nnoremap <F5> :lua IkonuHeader()<CR>')
+vim.cmd('nnoremap <F5> :lua Header()<CR>')
