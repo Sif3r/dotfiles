@@ -51,3 +51,4 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 # Init starship
 eval "$(starship init bash)"
+export DOCKER_HOST=unix:///var/run/docker.sock

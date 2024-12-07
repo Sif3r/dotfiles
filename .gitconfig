@@ -1,6 +1,5 @@
 # This is Git's per-user configuration file.
 [user]
-# Please adapt and uncomment the following lines:
 	name = Aurélien Aoustin
 	email = 62019680+Sif3r@users.noreply.github.com
 [core]
@@ -21,5 +20,3 @@
 	tool = fugitive
 [init]
 	defaultBranch = master
-[includeIf "gitdir:~/worspace/etna/"]
-	path = ~/worspace/etna/.gitconfig

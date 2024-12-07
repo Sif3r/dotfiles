@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+#export ZSH="$HOME/.oh-my-zsh"
 #
 # Start tmux if not already running within a tmux session.
 if [ "$TMUX" = "" ]; then tmux; fi

@@ -1,7 +1,7 @@
 require('plugins')
 require('basics')
 require('treesitter')
--- require('backup')
+require('backup')
 require('keybindings')
 require('search')
 require('characters')

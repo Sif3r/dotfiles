@@ -5,7 +5,7 @@ local bo = vim.bo
 function Header()
     local filetype = bo.filetype
     local filename = fn.expand('%:t')
-    local author = "Aurélien Aoustin (aousti_a@etna-alternance.net)"
+    local author = "Aurélien Aoustin (aurelien.aoustin@supinfo.com)"
     local created_date = os.date("%d/%m/%Y")
     local comType = {
         asm = {s = ';', c = '; ', e = ';'},

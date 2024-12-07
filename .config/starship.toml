@@ -22,6 +22,18 @@ format = "[$duration]($style)"
 disabled = false
 #map_symbol = true
 
+[git_status]
+conflicted = "!"
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?"
+stashed = "📦"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"
+
 [aws]
 symbol = "aws "
 
