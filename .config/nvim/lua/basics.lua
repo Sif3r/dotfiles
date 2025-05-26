@@ -32,6 +32,17 @@ opt.path:append("**")
 o.clipboard = 'unnamedplus'
 o.cursorline = true
 
+-- Create folder if doesn't exist
+vim.api.nvim_create_autocmd({"BufWritePre", "FileWritePre"}, {
+  pattern = "*",
+  callback = function()
+    local dir = vim.fn.expand("<afile>:p:h")
+    if vim.fn.isdirectory(dir) == 0 then
+      vim.fn.mkdir(dir, "p")
+    end
+  end,
+})
+
 -- Miscellaneous options
 o.mouse = 'a' -- integer the mouse management
 o.showmode = false -- as we got the status through lightline don't need to display twice

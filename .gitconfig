@@ -4,6 +4,9 @@
 	email = 62019680+Sif3r@users.noreply.github.com
 [core]
 	editor = nvim
+	compression = 9
+	whitespace = error
+	preloadindex = true
 [color]
 	ui = true
 [alias]
@@ -18,5 +21,7 @@
 	cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
 [merge]
 	tool = fugitive
+[pull]
+	rebase = true
 [init]
-	defaultBranch = master
+	defaultBranch = main

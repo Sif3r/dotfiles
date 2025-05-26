@@ -1,27 +1,28 @@
-# Path to your oh-my-zsh installation.
-#export ZSH="$HOME/.oh-my-zsh"
-#
-# Start tmux if not already running within a tmux session.
-if [ "$TMUX" = "" ]; then tmux; fi
+export ZSH="/home/cypher/.oh-my-zsh"
+source $ZSH/oh-my-zsh.sh
 
-# Set the number of commands to remember in the command history.
+plugins=(
+  git
+  git-extras
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+)
+
 HISTSIZE=1000
 SAVEHIST=1000
 
-plugins=(git
-	git-extras
-	archlinux
-	zsh-syntax-highlighting
-	zsh-autosuggestions)
+if [ -z "$TMUX" ]; then
+  tmux
+fi
 
-
-# Source the Oh My Zsh main script
-source $ZSH/oh-my-zsh.sh
-
-# Aliases
+# --- Aliases ---
 alias t="tree"
 alias nv="nvim"
-alias ls="exa"
+#alias ls="eza"
+alias l="ls -al"
+alias g="git"
+alias z="zoxide"
 
-# Initialize Starship, a cross-shell prompt
 eval "$(starship init zsh)"
+
+source <(fzf --zsh)
