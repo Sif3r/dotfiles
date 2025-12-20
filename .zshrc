@@ -1,5 +1,5 @@
 export ZSH="/home/cypher/.oh-my-zsh"
-source $ZSH/oh-my-zsh.sh
+export PATH=/home/cypher/.opencode/bin:$PATH
 
 plugins=(
   git
@@ -7,6 +7,8 @@ plugins=(
   zsh-syntax-highlighting
   zsh-autosuggestions
 )
+
+source $ZSH/oh-my-zsh.sh
 
 HISTSIZE=1000
 SAVEHIST=1000
