@@ -1,4 +1,8 @@
+local keymaps = require('config.keymaps')
+local telescope_config = require('config.telescope')
+
 return {
+    -- Simple plugins (no config needed)
     'tpope/vim-fugitive',
     'tpope/vim-commentary',
     'tpope/vim-eunuch',
@@ -10,33 +14,27 @@ return {
     -- OpenCode
     {
         'NickvanDyke/opencode.nvim',
-        config = function()
-            local oc = require("opencode")
-            vim.keymap.set({ "n", "x" }, "<C-a>", function() oc.ask("@this: ", { submit = true }) end, { desc = "Ask opencode" })
-            vim.keymap.set({ "n", "x" }, "<C-x>", function() oc.select() end, { desc = "Execute opencode" })
-        end
+        config = keymaps.opencode,
     },
 
     -- Telescope
     {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.6',
-        dependencies = { 'nvim-lua/plenary.nvim' },
+        dependencies = { 
+            'nvim-lua/plenary.nvim',
+            'nvim-treesitter/nvim-treesitter',
+        },
         config = function()
-            local builtin = require('telescope.builtin')
-            vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-            vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-            vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-            vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-        end
+            require('telescope').setup(telescope_config)
+            keymaps.telescope()
+        end,
     },
 
     -- Autopairs
     {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
-        config = function()
-            require("nvim-autopairs").setup {}
-        end
+        opts = {},
     }
 }
