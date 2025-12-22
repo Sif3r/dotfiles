@@ -40,14 +40,14 @@ return {
                 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
                 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
                 vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
-                vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-                vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+                vim.keymap.set("n", "[d", function() vim.diagnostic.jump({count=-1, float=true}) end, opts)
+                vim.keymap.set("n", "]d", function() vim.diagnostic.jump({count=1, float=true}) end, opts)
             end)
 
             -- Mason Setup
             require('mason').setup({})
             require('mason-lspconfig').setup({
-                ensure_installed = {'clangd', 'gopls', 'lua_ls'},
+                ensure_installed = {'clangd', 'gopls', 'lua_ls','ts_ls' },
                 handlers = {
                     lsp_zero.default_setup,
                     lua_ls = function()
