@@ -1,27 +1,31 @@
 local keymaps = require('config.keymaps')
 
 return {
-    -- Simple plugins (no config needed)
-    'tpope/vim-fugitive',
-    'tpope/vim-eunuch',
-    'tpope/vim-surround',
-    'tommcdo/vim-lion',
-    'romainl/vim-qf',
+    { 'tpope/vim-fugitive', cmd = { "Git", "G" } },
+    { 'tpope/vim-eunuch', cmd = { "Remove", "Delete", "Move", "Chmod" } },
+    { 'tommcdo/vim-lion', event = "VeryLazy" },
+    { 'romainl/vim-qf', ft = "qf" },
+    {
+        'echasnovski/mini.surround',
+        version = '*',
+        event = "VeryLazy",
+        config = function()
+            require('mini.surround').setup()
+        end,
+    },
 
-    -- OpenCode
     {
         'NickvanDyke/opencode.nvim',
+        event = "VeryLazy",
         config = keymaps.opencode,
     },
 
-    -- Snacks.nvim (Replaces Telescope)
     {
         "folke/snacks.nvim",
         priority = 1000,
         lazy = false,
         opts = {
             picker = { enabled = true },
-            -- explorer = { enabled = true }, -- Optional: Replaces file explorers like NeoTree
         },
         config = function(_, opts)
             require("snacks").setup(opts)
@@ -29,7 +33,6 @@ return {
         end,
     },
 
-    -- Autopairs
     {
         "windwp/nvim-autopairs",
         event = "InsertEnter",

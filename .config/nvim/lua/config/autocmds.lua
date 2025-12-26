@@ -1,6 +1,5 @@
 local api = vim.api
 
--- Create directory if it doesn't exist
 api.nvim_create_autocmd({ "BufWritePre" }, {
     pattern = "*",
     callback = function(event)
@@ -11,7 +10,6 @@ api.nvim_create_autocmd({ "BufWritePre" }, {
     end,
 })
 
--- Filetype specific indentation
 api.nvim_create_autocmd("FileType", {
     pattern = { "html", "css", "javascript", "typescript", "javascriptreact", "typescriptreact" },
     callback = function()
@@ -19,6 +17,7 @@ api.nvim_create_autocmd("FileType", {
         vim.opt_local.shiftwidth = 2
     end,
 })
+
 api.nvim_create_autocmd("FileType", {
     pattern = "go",
     callback = function()
@@ -28,7 +27,6 @@ api.nvim_create_autocmd("FileType", {
     end
 })
 
--- Remove trailing whitespace
 api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     command = [[%s/\s\+$//e]],

@@ -2,12 +2,13 @@ return {
     {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
+        event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             {'williamboman/mason.nvim'},
             {'williamboman/mason-lspconfig.nvim'},
             {'neovim/nvim-lspconfig'},
 
-            -- Blink.cmp
+
             {
                 'saghen/blink.cmp',
                 version = 'v0.*',
@@ -17,7 +18,6 @@ return {
                 ---@module 'blink.cmp'
                 ---@type blink.cmp.Config
                 opts = {
-                    -- 1. Disable the preset to avoid conflicts
                     keymap = {
                         preset = 'none',
                         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
@@ -37,7 +37,6 @@ return {
                         default = { 'lsp', 'path', 'snippets', 'buffer' },
                     },
 
-                    -- Optional: This ensures the list behaves like standard IDEs
                     completion = {
                         documentation = {
                             auto_show = true,
@@ -49,7 +48,7 @@ return {
                 opts_extend = { "sources.default" }
             },
 
-            -- Lua Dev (Lazydev)
+
             {
                 "folke/lazydev.nvim",
                 ft = "lua",
@@ -63,7 +62,7 @@ return {
         config = function()
             local lsp_zero = require('lsp-zero')
 
-            -- Lsp Zero Keymaps
+
             lsp_zero.on_attach(function(_, bufnr)
                 local opts = {buffer = bufnr, remap = false}
                 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
@@ -76,10 +75,10 @@ return {
                 vim.keymap.set("n", "]d", function() vim.diagnostic.jump({count=1, float=true}) end, opts)
             end)
 
-            -- Blink Capabilities
+
             local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-            -- Mason
+
             require('mason').setup({})
             require('mason-lspconfig').setup({
                 ensure_installed = {'clangd', 'gopls', 'lua_ls','ts_ls' },
