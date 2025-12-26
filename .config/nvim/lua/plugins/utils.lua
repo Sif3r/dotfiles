@@ -1,5 +1,4 @@
 local keymaps = require('config.keymaps')
-local telescope_config = require('config.telescope')
 
 return {
     -- Simple plugins (no config needed)
@@ -15,17 +14,18 @@ return {
         config = keymaps.opencode,
     },
 
-    -- Telescope
+    -- Snacks.nvim (Replaces Telescope)
     {
-        'nvim-telescope/telescope.nvim',
-        tag = '0.1.6',
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            'nvim-treesitter/nvim-treesitter',
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        opts = {
+            picker = { enabled = true },
+            -- explorer = { enabled = true }, -- Optional: Replaces file explorers like NeoTree
         },
-        config = function()
-            require('telescope').setup(telescope_config)
-            keymaps.telescope()
+        config = function(_, opts)
+            require("snacks").setup(opts)
+            keymaps.snacks()
         end,
     },
 

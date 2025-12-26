@@ -11,12 +11,12 @@ set('n', '<C-h>', '<C-w>h', { desc = 'Move to window left' })
 -- Plugin keymaps
 local M = {}
 
-function M.telescope()
-    local builtin = require('telescope.builtin')
-    set('n', '<leader>ff', builtin.find_files, { desc = 'Find files' })
-    set('n', '<leader>fg', builtin.live_grep, { desc = 'Live grep' })
-    set('n', '<leader>fb', builtin.buffers, { desc = 'Buffers' })
-    set('n', '<leader>fh', builtin.help_tags, { desc = 'Help tags' })
+function M.snacks()
+    local snacks = require("snacks")
+    set('n', '<leader>ff', function() snacks.picker.files() end, { desc = 'Find files' })
+    set('n', '<leader>fg', function() snacks.picker.grep() end, { desc = 'Live grep' })
+    set('n', '<leader>fb', function() snacks.picker.buffers() end, { desc = 'Buffers' })
+    set('n', '<leader>fh', function() snacks.picker.help() end, { desc = 'Help tags' })
 end
 
 function M.opencode()
