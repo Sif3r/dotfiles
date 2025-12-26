@@ -4,11 +4,9 @@ local telescope_config = require('config.telescope')
 return {
     -- Simple plugins (no config needed)
     'tpope/vim-fugitive',
-    'tpope/vim-commentary',
     'tpope/vim-eunuch',
     'tpope/vim-surround',
     'tommcdo/vim-lion',
-    'MaxMEllon/vim-jsx-pretty',
     'romainl/vim-qf',
 
     -- OpenCode
@@ -21,7 +19,7 @@ return {
     {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.6',
-        dependencies = { 
+        dependencies = {
             'nvim-lua/plenary.nvim',
             'nvim-treesitter/nvim-treesitter',
         },

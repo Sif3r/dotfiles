@@ -3,21 +3,52 @@ return {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
         dependencies = {
-            -- LSP
             {'williamboman/mason.nvim'},
             {'williamboman/mason-lspconfig.nvim'},
             {'neovim/nvim-lspconfig'},
 
-            -- Autocompletion
-            {'hrsh7th/nvim-cmp'},
-            {'hrsh7th/cmp-nvim-lsp'},
-            {'hrsh7th/cmp-buffer'},       -- Required for buffer suggestions
-            {'hrsh7th/cmp-path'},         -- Required for file path suggestions
-            {'saadparwaiz1/cmp_luasnip'}, -- Required for snippet suggestions
-            {'L3MON4D3/LuaSnip'},
-            {'rafamadriz/friendly-snippets'},
+            -- Blink.cmp
+            {
+                'saghen/blink.cmp',
+                version = 'v0.*',
+                dependencies = 'rafamadriz/friendly-snippets',
 
-            -- Lua Dev (Fixes "Undefined global vim")
+                ---@module 'blink.cmp'
+                ---@type blink.cmp.Config
+                opts = {
+                    -- 1. Disable the preset to avoid conflicts
+                    keymap = {
+                        preset = 'none',
+                        ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+                        ['<CR>'] = { 'accept', 'fallback' },
+                        ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+                        ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+                        ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+                        ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+                    },
+
+                    appearance = {
+                        use_nvim_cmp_as_default = true,
+                        nerd_font_variant = 'mono',
+                    },
+
+                    sources = {
+                        default = { 'lsp', 'path', 'snippets', 'buffer' },
+                    },
+
+                    -- Optional: This ensures the list behaves like standard IDEs
+                    completion = {
+                        documentation = {
+                            auto_show = true,
+                            auto_show_delay_ms = 0,
+                        },
+                        list = { selection = { preselect = false, auto_insert = true } },
+                    },
+                },
+                opts_extend = { "sources.default" }
+            },
+
+            -- Lua Dev (Lazydev)
             {
                 "folke/lazydev.nvim",
                 ft = "lua",
@@ -31,7 +62,7 @@ return {
         config = function()
             local lsp_zero = require('lsp-zero')
 
-            -- On Attach
+            -- Lsp Zero Keymaps
             lsp_zero.on_attach(function(_, bufnr)
                 local opts = {buffer = bufnr, remap = false}
                 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
@@ -44,58 +75,29 @@ return {
                 vim.keymap.set("n", "]d", function() vim.diagnostic.jump({count=1, float=true}) end, opts)
             end)
 
-            -- Mason Setup
+            -- Blink Capabilities
+            local capabilities = require('blink.cmp').get_lsp_capabilities()
+
+            -- Mason
             require('mason').setup({})
             require('mason-lspconfig').setup({
                 ensure_installed = {'clangd', 'gopls', 'lua_ls','ts_ls' },
                 handlers = {
-                    lsp_zero.default_setup,
+                    function(server_name)
+                        require('lspconfig')[server_name].setup({ capabilities = capabilities })
+                    end,
                     lua_ls = function()
-                        -- lazydev handles configuration
-                        require('lspconfig').lua_ls.setup({})
+                        require('lspconfig').lua_ls.setup({ capabilities = capabilities })
                     end,
                     gopls = function()
                         require('lspconfig').gopls.setup({
-                            settings = {
-                                gopls = { buildFlags = { "-tags=wiremock" } }
-                            }
+                            capabilities = capabilities,
+                            settings = { gopls = { buildFlags = { "-tags=wiremock" } } }
                         })
                     end,
                 }
             })
 
-            -- Autocompletion (CMP) Setup
-            local cmp = require('cmp')
-            local cmp_action = lsp_zero.cmp_action()
-
-            -- Load snippets from friendly-snippets
-            require('luasnip.loaders.from_vscode').lazy_load()
-
-            cmp.setup({
-                sources = {
-                    {name = 'path'},
-                    {name = 'nvim_lsp'},
-                    {name = 'luasnip', keyword_length = 2},
-                    {name = 'buffer', keyword_length = 3},
-                },
-                snippet = {
-                    expand = function(args)
-                        require('luasnip').lsp_expand(args.body)
-                    end,
-                },
-                mapping = cmp.mapping.preset.insert({
-                    ['<CR>'] = cmp.mapping.confirm({select = true}),
-                    ['<Tab>'] = cmp_action.tab_complete(),
-                    ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                }),
-                window = {
-                    completion = cmp.config.window.bordered(),
-                    documentation = cmp.config.window.bordered(),
-                }
-            })
-
-            -- UI Polish
             vim.diagnostic.config({
                 virtual_lines = true,
                 float = { border = 'rounded' }

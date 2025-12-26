@@ -16,5 +16,6 @@ return {
             additional_vim_regex_highlighting = false,
             disable = disable_large_files,
         },
+        indent = { enable = true },
     },
 }
