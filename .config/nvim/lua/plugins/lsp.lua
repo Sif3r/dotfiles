@@ -8,7 +8,6 @@ return {
             {'williamboman/mason-lspconfig.nvim'},
             {'neovim/nvim-lspconfig'},
 
-
             {
                 'saghen/blink.cmp',
                 version = 'v0.*',
@@ -48,7 +47,6 @@ return {
                 opts_extend = { "sources.default" }
             },
 
-
             {
                 "folke/lazydev.nvim",
                 ft = "lua",
@@ -62,7 +60,6 @@ return {
         config = function()
             local lsp_zero = require('lsp-zero')
 
-
             lsp_zero.on_attach(function(_, bufnr)
                 local opts = {buffer = bufnr, remap = false}
                 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
@@ -75,9 +72,7 @@ return {
                 vim.keymap.set("n", "]d", function() vim.diagnostic.jump({count=1, float=true}) end, opts)
             end)
 
-
             local capabilities = require('blink.cmp').get_lsp_capabilities()
-
 
             require('mason').setup({})
             require('mason-lspconfig').setup({

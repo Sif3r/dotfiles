@@ -16,14 +16,12 @@ opt.smartcase = true
 opt.incsearch = true
 opt.hlsearch = false
 
-
 opt.number = true
 opt.relativenumber = true
 opt.cursorline = true
 opt.colorcolumn = "80"
 opt.scrolloff = 5
 opt.signcolumn = "yes" -- Prevent layout shift for diagnostics
-
 
 opt.list = true
 opt.listchars:append({
@@ -35,16 +33,13 @@ opt.listchars:append({
 })
 opt.showbreak = '⤷ '
 
-
 opt.splitbelow = true
 opt.splitright = true
-
 
 opt.backupdir = vim.fn.expand('~/.nvim/backup//')
 opt.directory = vim.fn.expand('~/.nvim/swp//')
 opt.undodir = vim.fn.expand('~/.nvim/undo//')
 opt.undofile = true
-
 
 opt.lazyredraw = true
 opt.updatetime = 300 -- Faster completion/diagnostics
