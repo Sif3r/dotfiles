@@ -1,5 +1,11 @@
-export ZSH="/home/cypher/.oh-my-zsh"
-export PATH=/home/cypher/.opencode/bin:$PATH
+export ZSH="$HOME/.oh-my-zsh"
+export PATH="$HOME/.opencode/bin:$HOME/.cargo/bin:$PATH"
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
 
 plugins=(
   git
@@ -10,21 +16,14 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-HISTSIZE=1000
-SAVEHIST=1000
+eval "$(starship init zsh)"
+source <(fzf --zsh)
 
-if [ -z "$TMUX" ]; then
-  tmux
-fi
-
-# --- Aliases ---
 alias t="tree"
 alias nv="nvim"
-#alias ls="eza"
-alias l="ls -al"
 alias g="git"
-alias z="zoxide"
+alias l="ls -al"
 
-eval "$(starship init zsh)"
-
-source <(fzf --zsh)
+if [[ -z "$TMUX" ]] && [[ -n "$PS1" ]]; then
+    exec tmux new-session -A -s main
+fi
