@@ -1,22 +1,26 @@
-local function disable_large_files(_, buf)
-    local max_filesize = 100 * 1024
-    local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
-    return ok and stats and stats.size > max_filesize
-end
-
 return {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main", -- 'main' is the rewrite/experimental branch (new API)
+    lazy = false,
     build = ":TSUpdate",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "javascript", "typescript", "go" },
-        sync_install = false,
-        auto_install = true,
-        highlight = {
-            enable = true,
-            additional_vim_regex_highlighting = false,
-            disable = disable_large_files,
-        },
-        indent = { enable = true },
-    },
+    config = function()
+        local ts = require("nvim-treesitter")
+
+        ts.install({
+            -- Core & Vim
+            "lua", "vim", "vimdoc", "query", "regex", "luadoc",
+
+            -- Web (Frontend)
+            "html", "css", "javascript", "typescript", "tsx", "json", "vue",
+
+            -- Backend & Systems
+            "c", "cpp", "go", "python", "rust", "php", "sql",
+
+            -- Config, Ops & Tools
+            "bash", "dockerfile", "yaml", "toml", "make", "git_config", "gitcommit",
+
+            -- Markup
+            "markdown", "markdown_inline",
+        })
+    end,
 }

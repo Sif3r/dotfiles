@@ -48,3 +48,31 @@ api.nvim_create_autocmd("BufNewFile", {
         vim.cmd('normal! k')
     end,
 })
+
+-- Enable Treesitter Highlighting & Indent
+api.nvim_create_autocmd("FileType", {
+    callback = function(args)
+        -- 1. Guard: Stop if file is too big
+        local max_filesize = 100 * 1024
+        local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(args.buf))
+        if ok and stats and stats.size > max_filesize then
+            return
+        end
+
+        -- 2. Action: Start Treesitter
+        local has_parser, _ = pcall(vim.treesitter.start, args.buf)
+
+        -- 3. Optional: Enable Indentation
+        if has_parser then
+            vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
+    end,
+})
+
+-- Add custom filetypes
+vim.filetype.add({
+    pattern = {
+        [".*%.yaml%.j2"] = "yaml",
+        [".*%.yml%.j2"] = "yaml",
+    },
+})
