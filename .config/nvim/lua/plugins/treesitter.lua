@@ -1,6 +1,6 @@
 return {
     "nvim-treesitter/nvim-treesitter",
-    branch = "main", -- 'main' is the rewrite/experimental branch (new API)
+    branch = "main",
     lazy = false,
     build = ":TSUpdate",
     config = function()
