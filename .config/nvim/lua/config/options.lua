@@ -44,3 +44,6 @@ opt.undofile = true
 opt.lazyredraw = true
 opt.updatetime = 300 -- Faster completion/diagnostics
 opt.timeoutlen = 500
+
+opt.wildignore = '*.o,*.pyc,*.class,__pycache__,node_modules,.git'
+opt.wildmode = 'full'

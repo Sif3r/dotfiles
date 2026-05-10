@@ -11,7 +11,7 @@ return {
             "lua", "vim", "vimdoc", "query", "regex", "luadoc",
 
             -- Web (Frontend)
-            "html", "css", "javascript", "typescript", "tsx", "json", "vue",
+            "html", "css", "javascript", "typescript", "tsx", "json", "svelte",
 
             -- Backend & Systems
             "c", "cpp", "go", "python", "rust", "php", "sql",

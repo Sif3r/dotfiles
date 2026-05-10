@@ -76,7 +76,7 @@ return {
 
             require('mason').setup({})
             require('mason-lspconfig').setup({
-                ensure_installed = {'clangd', 'gopls', 'lua_ls','ts_ls' },
+                ensure_installed = {'clangd', 'gopls', 'lua_ls','ts_ls', 'svelte' },
                 handlers = {
                     function(server_name)
                         require('lspconfig')[server_name].setup({ capabilities = capabilities })
