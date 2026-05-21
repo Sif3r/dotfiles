@@ -1,6 +1,5 @@
 local opt = vim.opt
 
-opt.encoding = 'utf-8'
 opt.termguicolors = true
 opt.mouse = 'a'
 opt.clipboard = 'unnamedplus'
@@ -41,8 +40,10 @@ opt.directory = vim.fn.expand('~/.nvim/swp//')
 opt.undodir = vim.fn.expand('~/.nvim/undo//')
 opt.undofile = true
 
-opt.lazyredraw = true
 opt.updatetime = 300 -- Faster completion/diagnostics
+opt.pumborder = 'rounded'
+opt.pummaxwidth = 40
+opt.completeopt = 'menu,menuone,noselect,nearest'
 opt.timeoutlen = 500
 
 opt.wildignore = '*.o,*.pyc,*.class,__pycache__,node_modules,.git'

@@ -1,26 +1,16 @@
-return {
-    "nvim-treesitter/nvim-treesitter",
-    branch = "main",
-    lazy = false,
-    build = ":TSUpdate",
-    config = function()
-        local ts = require("nvim-treesitter")
+require('nvim-treesitter').install({
+    -- Core & Vim
+    'lua', 'vim', 'vimdoc', 'query', 'regex', 'luadoc',
 
-        ts.install({
-            -- Core & Vim
-            "lua", "vim", "vimdoc", "query", "regex", "luadoc",
+    -- Web (Frontend)
+    'html', 'css', 'javascript', 'typescript', 'tsx', 'json', 'svelte',
 
-            -- Web (Frontend)
-            "html", "css", "javascript", "typescript", "tsx", "json", "svelte",
+    -- Backend & Systems
+    'c', 'cpp', 'go', 'python', 'rust', 'php', 'sql',
 
-            -- Backend & Systems
-            "c", "cpp", "go", "python", "rust", "php", "sql",
+    -- Config, Ops & Tools
+    'bash', 'dockerfile', 'yaml', 'toml', 'make', 'git_config', 'gitcommit',
 
-            -- Config, Ops & Tools
-            "bash", "dockerfile", "yaml", "toml", "make", "git_config", "gitcommit",
-
-            -- Markup
-            "markdown", "markdown_inline",
-        })
-    end,
-}
+    -- Markup
+    'markdown', 'markdown_inline',
+})

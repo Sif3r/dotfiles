@@ -12,7 +12,7 @@ api.nvim_create_autocmd({ "BufWritePre" }, {
 
 api.nvim_create_autocmd("FileType", {
     pattern = { "html", "css", "javascript", "typescript",
-        "javascriptreact", "typescriptreact", "svelte" },
+    "javascriptreact", "typescriptreact", "svelte" },
     callback = function()
         vim.opt_local.tabstop = 2
         vim.opt_local.shiftwidth = 2
@@ -53,19 +53,13 @@ api.nvim_create_autocmd("BufNewFile", {
 -- Enable Treesitter Highlighting & Indent
 api.nvim_create_autocmd("FileType", {
     callback = function(args)
-        -- 1. Guard: Stop if file is too big
         local max_filesize = 100 * 1024
         local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(args.buf))
-        if ok and stats and stats.size > max_filesize then
-            return
-        end
+        if ok and stats and stats.size > max_filesize then return end
 
-        -- 2. Action: Start Treesitter
         local has_parser, _ = pcall(vim.treesitter.start, args.buf)
-
-        -- 3. Optional: Enable Indentation
         if has_parser then
-            vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+            vim.bo[args.buf].indentexpr = "v:lua.vim.treesitter.indentexpr()"
         end
     end,
 })

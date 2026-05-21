@@ -1,69 +1,64 @@
-return {
-    {
-        "catppuccin/nvim",
-        name = "catppuccin",
-        priority = 1000,
-        config = function()
-            vim.cmd.colorscheme "catppuccin"
-        end
-    },
-    {
-        'echasnovski/mini.statusline',
-        version = '*',
-        config = function()
-            local statusline = require('mini.statusline')
-            statusline.setup({
-                use_icons = false,
-                content = {
-                    active = function()
-                        -- 1. Mode (Upper case: NORMAL)
-                        local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
+vim.cmd.colorscheme('catppuccin')
 
-                        -- 2. Git & Filename (master | init.lua)
-                        local git = statusline.section_git({ trunc_width = 40 })
-                        if git == "" and vim.fn.exists("*FugitiveHead") == 1 then
-                            local branch = vim.fn.FugitiveHead()
-                            if branch ~= "" then
-                                git = " " .. branch --
-                            end
-                        end
-                        local file = vim.fn.expand('%:t')
-                        if vim.bo.modified then file = file .. '[+]' end
-                        if vim.bo.readonly then file = file .. '[-]' end
+local statusline = require('mini.statusline')
+statusline.setup({
+    use_icons = false,
+    content = {
+        active = function()
+            local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
 
-                        -- Handle separator: only show '|' if git info exists
-                        local git_file_group = {}
-                        if git and #git > 0 then
-                            table.insert(git_file_group, git)
-                            table.insert(git_file_group, '|')
-                        end
-                        table.insert(git_file_group, file)
+            -- Git branch — read .git/HEAD directly so it works
+            -- regardless of whether fugitive is lazy-loaded yet
+            local git = ""
+            local head = vim.fn.findfile('.git/HEAD', vim.fn.expand('%:p:h') .. ';') --[[@as string]]
+            if head ~= '' then
+                local f = io.open(head, 'r')
+                if f then
+                    local content = f:read('*l')
+                    f:close()
+                    -- normal branch  → "ref: refs/heads/main"
+                    -- detached HEAD  → raw commit hash, show first 7 chars
+                    git = content:match('^ref: refs/heads/(.+)$') or content:sub(1, 7)
+                end
+            end
 
-                        -- 3. File Info (unix | utf-8 | lua)
-                        local file_encoding = vim.bo.fileencoding or vim.o.encoding
-                        local file_format = vim.bo.fileformat
-                        local file_type = vim.bo.filetype
-                        local info_str = string.format('%s | %s | %s', file_format, file_encoding, file_type)
+            local file = vim.fn.expand('%:t')
+            if vim.bo.modified then file = file .. '[+]' end
+            if vim.bo.readonly then file = file .. '[-]' end
 
-                        -- 4. Location (25% 1:1)
-                        local line = vim.fn.line('.')
-                        local col = vim.fn.col('.')
-                        local total_lines = vim.fn.line('$')
-                        local percent = math.floor((line / total_lines) * 100)
-                        local loc_str = string.format('%d%%%%  %d:%d', percent, line, col)
+            local git_file_group = {}
+            if git ~= '' then
+                table.insert(git_file_group, git)
+                table.insert(git_file_group, '|')
+            end
+            table.insert(git_file_group, file)
 
-                        return statusline.combine_groups({
-                            { hl = mode_hl,                 strings = { mode:upper() } },
-                            { hl = 'MiniStatuslineDevinfo', strings = git_file_group },
+            local info_str = string.format(
+                '%s | %s | %s',
+                vim.bo.fileformat,
+                vim.bo.fileencoding or vim.o.encoding,
+                vim.bo.filetype
+            )
 
-                            '%=', -- Spacer
+            -- LSP progress / diagnostics (new in Nvim 0.12)
+            local lsp_str  = vim.lsp.status()       or ""
+            local diag_str = vim.diagnostic.status() or ""
+            local right_str = lsp_str  ~= "" and lsp_str
+            or diag_str ~= "" and diag_str
+            or info_str
 
-                            { hl = 'MiniStatuslineFileinfo', strings = { info_str } },
-                            { hl = mode_hl,                 strings = { loc_str } },
-                        })
-                    end
-                }
+            local line  = vim.fn.line('.')
+            local col   = vim.fn.col('.')
+            local total = vim.fn.line('$')
+            local loc_str = string.format('%d%%%%  %d:%d', math.floor(line / total * 100), line, col)
+
+            return statusline.combine_groups({
+                { hl = mode_hl,                  strings = { mode:upper() } },
+                { hl = 'MiniStatuslineDevinfo',  strings = git_file_group },
+                '%=',
+                { hl = 'MiniStatuslineFileinfo', strings = { right_str } },
+                { hl = mode_hl,                  strings = { loc_str } },
             })
         end
     }
-}
+})
